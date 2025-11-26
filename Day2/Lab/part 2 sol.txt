@@ -1,0 +1,86 @@
+--insert with sql query:
+
+
+INSERT INTO Dept VALUES
+(10, 'HR', 101, '2018-03-01'),
+(20, 'IT', 102, '2019-07-15');
+
+
+
+INSERT INTO Employee VALUES
+(1, 'Ahmed', 'Ali', 5000, '1990-05-12', 'M', 10, NULL),
+(2, 'Sara', 'Hassan', 6500, '1992-09-20', 'F', 20, 101);
+
+
+
+INSERT INTO Project VALUES
+(101, 'Recruitment System', 'Cairo', 'Cairo', 10),
+(102, 'Website Redesign', 'Alexandria', 'Alexandria', 20);
+
+
+INSERT INTO Locations VALUES
+(10, 'Cairo'),
+(20, 'Alexandria');
+
+
+INSERT INTO Dependent VALUES
+(1, 'Omar', '2015-06-10', 'M'),
+(2, 'Laila', '2017-11-22', 'F');
+
+
+INSERT INTO Work VALUES
+(1, 1001, 35),
+(2, 1002, 40);
+
+
+--1.Display all the employees Data.
+select * from Employee
+
+
+--2.Display the employee First name, last name, Salary and Department number.
+select first, last, salary, DNO
+from Employee
+
+
+--3.Display all the projects names, locations and the department which is responsible about it.
+select Pname, loc, Dnum
+from Project
+
+
+--4.If you know that the company policy is to pay an annual commission for each employee with specific percent equals 10% of his/her annual salary .Display each employee full name and his annual commission in an ANNUAL COMM column (alias).
+select first+' '+last as "full name", salary * 12 * 10/100 as "ANNUAL COMM"
+from Employee
+
+
+--5.Display the employees Id, name who earns more than 1000 LE monthly.
+select SSN, first, last
+from Employee 
+where salary > 1000
+
+
+
+--6.Display the employees Id, name who earns more than 10000 LE annually.
+select SSN, first, last
+from Employee 
+where salary*12 > 10000
+
+
+--7.Display the names and salaries of the female employees 
+select first, last, salary
+from Employee
+where gender ='F'
+
+--8.Display each department id, name which managed by a manager with id equals 968574.
+select Dnum, Dname
+from Dept 
+where MgrSSN = 968574
+
+
+--9.Dispaly the ids, names and locations of  the pojects which controled with department 10.
+select Pnum, Pname, loc
+from Project
+where Dnum = 10
+
+
+
+
