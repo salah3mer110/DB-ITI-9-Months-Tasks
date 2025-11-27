@@ -1,0 +1,120 @@
+use Company_SD
+
+--1.	Display the Department id, name and id and the name of its manager.
+select Dnum,Dname,SSN,concat(fname,' ',lname) "Manager Name"
+from Employee , Departments
+where Dnum = Dno
+
+
+select Dnum,Dname,SSN,concat(fname,' ',lname) "Manager Name"
+from Employee join Departments
+on Dnum = Dno
+
+
+--2.	Display the name of the departments and the name of the projects under its control.
+select Dname,Pname
+from Departments D, Project P 
+where D.Dnum = P.Dnum
+
+select Dname,Pname
+from Departments D join Project P 
+on D.Dnum = P.Dnum
+
+
+--3.	Display the full data about all the dependence associated with the name of the employee they depend on him/her.
+select concat(fname,' ',lname) Employee,D.*
+from Employee E , Dependent D
+where ssn=essn
+
+select concat(fname,' ',lname) Employee,D.*
+from Employee E join Dependent D
+on ssn=essn
+
+
+--4.	Display the Id, name and location of the projects in Cairo or Alex city.
+select Pnumber, pname,plocation
+from project
+where city in ('Alex','Cairo')
+
+
+
+--5.	Display the Projects full data of the projects with a name starts with "a" letter.
+select *
+from project 
+where pname like 'a%'
+
+
+--6.	display all the employees in department 30 whose salary from 1000 to 2000 LE monthly
+select *
+from Employee 
+where dno=30 and salary between 999 and 2001
+
+
+--7.	Retrieve the names of all employees in department 10 who works more than or equal10 hours per week on "AL Rabwah" project.
+select concat(fname,' ',lname) Employee
+from Employee join Works_for
+on ssn=essn
+join project
+on pnumber=pno
+where Dno=10 and hours >=10 and pname='Al Rabwah'
+
+--8.	Find the names of the employees who directly supervised with Kamel Mohamed.
+select e.fname Employee ,s.fname Supervisor
+from Employee E , Employee S
+where E.ssn=s.superssn and s.fname='Kamel' and s.lname = 'Mohamed'
+
+
+select e.fname Employee ,s.fname Supervisor
+from Employee E join Employee S
+on E.ssn=s.superssn  
+where s.fname='Kamel' and s.lname = 'Mohamed'
+
+
+
+--9.	Retrieve the names of all employees and the names of the projects they are working on, sorted by the project name.
+select fname,pname
+from employee join works_for
+on ssn=essn
+join project
+on pnumber=pno
+order by pname
+
+
+
+--10.	For each project located in Cairo City , find the project number, the controlling department name ,the department manager last name ,address and birthdate.
+select pnumber,dname,lname,address,bdate
+from project p join departments d
+on p.Dnum=d.Dnum
+join employee
+on ssn=mgrssn
+where city='cairo'
+
+
+--11.	Display All Data of the managers
+select e.*
+from employee e, departments d
+where ssn=mgrssn
+
+select e.*
+from employee e join departments d
+on ssn=mgrssn
+
+
+--12.	Display All Employees data and the data of their dependents even if they have no dependents
+select e.*, d.*
+from employee e left outer join dependent d
+on ssn=essn
+
+
+--13.	Insert your personal data to the employee table as a new employee in department number 30, SSN = 102672, Superssn = 112233, salary=3000.
+insert into employee(fname,ssn,salary,superssn,dno) values('Salah',102672,3000,112233,30)
+
+
+--14.	Insert another employee with personal data your friend as new employee in department number 30, SSN = 102660, but don’t enter any value for salary or supervisor number to him.
+insert into employee(fname,ssn,dno) values('Khaled',102660,30)
+
+
+--15.	Upgrade your salary by 20 % of its last value.
+update employee
+set Salary =Salary + Salary*20/100
+where ssn=102672
